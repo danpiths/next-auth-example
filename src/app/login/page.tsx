@@ -74,6 +74,7 @@ export default function Page() {
         alt="Hero Image for Login Page"
         src={HeroImage}
         className="fixed top-4 -z-10 h-60 w-[98%] rounded-md object-cover object-center"
+        priority
       />
       <form
         className="flex w-[22%] min-w-72 flex-col gap-5 rounded-md bg-neutral-100 p-4 drop-shadow-lg"
