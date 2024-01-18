@@ -10,7 +10,7 @@ export default function SignOutButton({
   return (
     <button
       onClick={() => (authOption == "sign-in" ? signIn() : signOut())}
-      className="bg-slate-200 px-3 py-2 rounded text-slate-900 font-bold hover:bg-slate-300 transition ease-in-out duration-300 focus:outline-none focus:bg-slate-300 focus:ring-2 focus:ring-offset-2 focus:ring-slate-300 focus:ring-offset-black active:bg-slate-400 capitalize"
+      className="rounded bg-slate-200 px-3 py-2 font-bold capitalize text-slate-900 transition duration-300 ease-in-out hover:bg-slate-300 focus:bg-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:ring-offset-2 focus:ring-offset-black active:bg-slate-400"
     >
       {authOption.split("-").join(" ")}
     </button>
