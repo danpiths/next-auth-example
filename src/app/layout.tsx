@@ -21,7 +21,7 @@ export default async function RootLayout({
     <html lang="en">
       <body
         className={
-          "min-h-screen flex w-full flex-col items-center justify-center bg-black text-white " +
+          "flex min-h-screen w-full flex-col items-center justify-center bg-neutral-100 text-neutral-900 " +
           inter.className
         }
       >
