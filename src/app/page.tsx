@@ -14,7 +14,7 @@ export default async function Home() {
       <div className="flex items-center gap-2">
         <Link
           href="/dashboard"
-          className="rounded bg-blue-600 px-3 py-2 font-bold capitalize text-blue-100 transition duration-300 ease-in-out hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-offset-2 focus:ring-offset-black active:bg-blue-800"
+          className="rounded bg-blue-600 px-3 py-2 font-bold capitalize text-blue-100 transition duration-300 ease-in-out hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-offset-2 focus:ring-offset-neutral-100 active:bg-blue-800"
         >
           {session && session.user
             ? "Visit the Dashboard"
