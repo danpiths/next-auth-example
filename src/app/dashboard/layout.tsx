@@ -15,9 +15,9 @@ export default async function Layout({
   }
 
   return (
-    <div className="flex flex-1 bg-gradient-to-r from-sky-900 to-sky-800 text-neutral-100">
+    <div className="flex flex-1 flex-col bg-gradient-to-r from-sky-900 to-sky-800 text-neutral-100 md:flex-row">
       <Sidebar />
-      <main className="flex flex-1 pl-6 pt-12">{children}</main>
+      <main className="flex flex-1 px-5 py-5 md:px-6 md:py-12">{children}</main>
     </div>
   );
 }
