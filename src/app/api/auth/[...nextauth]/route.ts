@@ -9,7 +9,7 @@ async function authorizeUser(userId: string, password: string) {
   }
   const isPasswordValid = await bcrypt.compare(
     password,
-    "$2b$12$58nZrqlWQecZC6D8saKakuxiEScvSDjUhLYi/YJyXVMNmxETq21vq"
+    "$2b$12$58nZrqlWQecZC6D8saKakuxiEScvSDjUhLYi/YJyXVMNmxETq21vq",
   );
   if (!isPasswordValid) {
     throw new Error(`Wrong credentials.`);
@@ -33,7 +33,7 @@ const authOptions: NextAuthOptions = {
           try {
             const user = await authorizeUser(
               credentials?.userId,
-              credentials?.password
+              credentials?.password,
             );
             revalidatePath("/");
             return user;
