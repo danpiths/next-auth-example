@@ -6,7 +6,7 @@ export default async function Home() {
   const session = await getServerSession();
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-5">
-      <h1 className="text-5xl font-bold">
+      <h1 className="text-3xl font-bold md:text-5xl">
         {session && session.user
           ? `user: ${session.user.name}`
           : "Please sign in"}
