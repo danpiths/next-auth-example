@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import SessionProvider from "../components/SessionProvider";
 import { getServerSession } from "next-auth";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,10 +21,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={
-          "flex min-h-screen w-full flex-col bg-neutral-100 text-neutral-900 " +
-          inter.className
-        }
+        className={cn(
+          "flex min-h-screen w-full flex-col bg-neutral-100 text-neutral-900 ",
+          inter.className,
+        )}
       >
         <SessionProvider session={session}>{children}</SessionProvider>
       </body>
