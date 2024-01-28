@@ -1,7 +1,6 @@
 "use client";
 
-import { signIn } from "next-auth/react";
-import { revalidatePath } from "next/cache";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,12 +9,19 @@ import z from "zod";
 import HeroImage from "../../../public/login-hero-image.jpg";
 
 export default function Page() {
+  const session = useSession();
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
   const [pending, setPending] = useState(false);
   const router = useRouter();
   const userIdRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (session.status !== "loading" && session.status === "authenticated") {
+      router.replace("/dashboard");
+    }
+  }, [session]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -69,7 +75,7 @@ export default function Page() {
   }, [err]);
 
   return (
-    <div className="relative flex w-full flex-1 items-center justify-center">
+    <div className="flex relative flex-1 justify-center items-center w-full">
       <Image
         alt="Hero Image for Login Page"
         src={HeroImage}
@@ -80,10 +86,10 @@ export default function Page() {
         className="flex w-[22%] min-w-72 flex-col gap-5 rounded-md bg-neutral-100 p-4 drop-shadow-lg"
         onSubmit={handleSubmit}
       >
-        <div className="relative -mt-10 w-full rounded-md bg-gradient-to-bl from-neutral-700 to-neutral-900 p-5 text-neutral-100 drop-shadow-lg">
+        <div className="relative p-5 -mt-10 w-full bg-gradient-to-bl rounded-md from-neutral-700 to-neutral-900 text-neutral-100 drop-shadow-lg">
           <Link
             href="/"
-            className="fixed right-3 top-2 rounded transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-rose-500"
+            className="fixed top-2 right-3 rounded transition duration-200 ease-in-out focus:ring-2 focus:ring-rose-500 focus:outline-none"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -95,18 +101,18 @@ export default function Page() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="lucide lucide-x transition duration-200 ease-in-out hover:text-rose-500"
+              className="transition duration-200 ease-in-out hover:text-rose-500 lucide lucide-x"
             >
               <path d="M18 6 6 18" />
               <path d="m6 6 12 12" />
             </svg>
           </Link>
-          <h1 className="mb-5 text-center text-2xl font-bold">Sign In</h1>
-          <p className="text-balance text-center text-sm">
+          <h1 className="mb-5 text-2xl font-bold text-center">Sign In</h1>
+          <p className="text-sm text-center text-balance">
             Enter your email and password to Sign In
           </p>
         </div>
-        <div className="mt-3 flex flex-col gap-1">
+        <div className="flex flex-col gap-1 mt-3">
           <label htmlFor="userid" className="text-xs text-neutral-600">
             User Id
           </label>
@@ -117,7 +123,7 @@ export default function Page() {
             onChange={(e) => setUserId(e.target.value)}
             value={userId}
             placeholder="some_username"
-            className="border-b-2 border-b-neutral-300 bg-neutral-100 caret-neutral-900 transition duration-300 ease-in-out selection:bg-neutral-900 selection:text-neutral-100 focus:border-b-neutral-600 focus:outline-none"
+            className="border-b-2 transition duration-300 ease-in-out focus:outline-none border-b-neutral-300 bg-neutral-100 caret-neutral-900 selection:bg-neutral-900 selection:text-neutral-100 focus:border-b-neutral-600"
           />
         </div>
         <div className="flex flex-col gap-1">
@@ -130,19 +136,18 @@ export default function Page() {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             placeholder="*************"
-            className="border-b-2 border-b-neutral-300 bg-neutral-100 caret-neutral-900 transition duration-300 ease-in-out selection:bg-neutral-900 selection:text-neutral-100 focus:border-b-neutral-600 focus:outline-none"
+            className="border-b-2 transition duration-300 ease-in-out focus:outline-none border-b-neutral-300 bg-neutral-100 caret-neutral-900 selection:bg-neutral-900 selection:text-neutral-100 focus:border-b-neutral-600"
           />
         </div>
         {err && <p className="text-rose-500">{err}</p>}
         <button
           disabled={pending}
-          className={`flex items-center justify-center gap-2 rounded bg-gradient-to-bl from-neutral-700 to-neutral-900 p-3 text-sm font-semibold uppercase text-neutral-100 transition duration-300 ease-in-out enabled:hover:-translate-y-1 enabled:hover:transform enabled:hover:drop-shadow-xl enabled:focus:-translate-y-1 enabled:focus:transform enabled:focus:outline-none enabled:focus:ring-2 enabled:focus:ring-neutral-700 enabled:focus:ring-offset-2 enabled:focus:ring-offset-neutral-400 enabled:focus:drop-shadow-xl disabled:cursor-not-allowed disabled:opacity-50 ${
-            !err && "mt-5"
-          }`}
+          className={`flex items-center justify-center gap-2 rounded bg-gradient-to-bl from-neutral-700 to-neutral-900 p-3 text-sm font-semibold uppercase text-neutral-100 transition duration-300 ease-in-out enabled:hover:-translate-y-1 enabled:hover:transform enabled:hover:drop-shadow-xl enabled:focus:-translate-y-1 enabled:focus:transform enabled:focus:outline-none enabled:focus:ring-2 enabled:focus:ring-neutral-700 enabled:focus:ring-offset-2 enabled:focus:ring-offset-neutral-400 enabled:focus:drop-shadow-xl disabled:cursor-not-allowed disabled:opacity-50 ${!err && "mt-5"
+            }`}
         >
           Sign In
           {pending && (
-            <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" />
+            <div className="inline-block w-4 h-4 rounded-full border-2 border-current border-solid animate-spin border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" />
           )}
         </button>
       </form>
